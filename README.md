@@ -15,25 +15,29 @@ plugins/paul-kun/
 
 専用API、MCPサーバー、追加ライブラリは使いません。株価などは取得元と基準日を確認し、見つからない数字は記事に無理に入れません。
 
-## 導入手順
+## Macでの導入手順
 
-Codex CLIが使える別の環境で、このリポジトリをGitHubに置いた後、以下を実行します。`OWNER/REPO`は実際のGitHub上の場所に置き換えてください。
+配布元は **[Unripe01/PaulPlugin](https://github.com/Unripe01/PaulPlugin)**、導入するプラグインはリポジトリ内の `plugins/paul-kun/` です。以下は、別の人が自分のMacのターミナル（zsh）で実行する手順です。`$HOME/PaulPlugin` はその人のホームフォルダ内の保存先で、ユーザー名の書き換えは不要です。
 
-```powershell
-codex plugin marketplace add OWNER/REPO
+1. [Codex](https://developers.openai.com/codex)にサインインし、Macで `git` と `codex` コマンドが使えることを確認します。足りない場合は、それぞれの公式手順で準備します。追加の株価APIやnote用MCPは不要です。
+2. このGitHubリポジトリへアクセスできるGitHubアカウントで、以下を実行します。
+
+```bash
+command -v git
+command -v codex
+git clone https://github.com/Unripe01/PaulPlugin.git "$HOME/PaulPlugin"
+test -f "$HOME/PaulPlugin/.agents/plugins/marketplace.json"
+test -f "$HOME/PaulPlugin/plugins/paul-kun/plugin.json"
+test -f "$HOME/PaulPlugin/plugins/paul-kun/skills/stock-to-note/SKILL.md"
+codex plugin marketplace add "$HOME/PaulPlugin"
+codex plugin marketplace list
 codex plugin add paul-kun@paul-kun-demo
 codex plugin list
 ```
 
-ローカルのcloneから試す場合は、cloneしたリポジトリのルートを指定します。
+`git clone` に失敗した場合は、まずブラウザで上記のGitHubページを、その人自身のアカウントで開けるか確認してください。非公開リポジトリなら、所有者からアクセス権をもらい、招待を承諾してからcloneします。HTTPSのGit認証も必要です。ページが見えない状態でCodexの操作だけ進めても導入できません。
 
-```powershell
-git clone https://github.com/OWNER/REPO.git
-codex plugin marketplace add ./REPO
-codex plugin add paul-kun@paul-kun-demo
-```
-
-Codexデスクトップではプラグイン一覧から有効化し、**新しいチャット**で使ってください。プラグインの追加・更新時は、必要に応じてCodexを再起動してください。
+Codexデスクトップアプリを使う場合は、cloneした `~/PaulPlugin` をプロジェクトとして開き、プラグイン一覧で「Paul Kun Demo」から「ポールくんプラグイン」をインストール・有効化します。CLIで追加した場合も、**新しいチャット**で試してください。プラグインが表示されなければアプリを再起動します。
 
 ## 利用前準備
 
@@ -57,20 +61,16 @@ Codexデスクトップではプラグイン一覧から有効化し、**新し�
 
 ログイン画面やCAPTCHAが出たらそこで中断し、ユーザーが操作した後で続けます。保存に失敗した場合は、下書き一覧を先に見て重複作成を避けます。
 
-## GitHubへ上げる手順
+## GitHubへ変更を反映する（管理者向け）
 
-リポジトリのルートで実行します。`OWNER/REPO`を実際に作成した空のGitHubリポジトリへ置き換えてください。
+GitHubへの書き込み権限があり、上の手順で `~/PaulPlugin` にcloneした場合のコマンドです。`origin` は `https://github.com/Unripe01/PaulPlugin.git` を指します。
 
-```powershell
-git init
-git add .
-git commit -m "Add Paul Kun stock-to-note PoC plugin"
-git branch -M main
-git remote add origin https://github.com/OWNER/REPO.git
-git push -u origin main
+```bash
+git -C "$HOME/PaulPlugin" status
+git -C "$HOME/PaulPlugin" add .
+git -C "$HOME/PaulPlugin" commit -m "Update Paul Kun plugin"
+git -C "$HOME/PaulPlugin" push origin main
 ```
-
-すでにGit管理されている場合、`git init`は不要です。既存の`origin`がある場合は、重複して追加せずURLを確認してください。GitHubへの公開はこのREADMEの手順で行い、このPoCの動作には不要です。
 
 ## 注意事項
 
