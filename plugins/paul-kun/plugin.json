@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "paul-kun",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Find a timely Japanese stock, research it, write a readable article, and save it as a note draft in the browser.",
   "author": { "name": "竹村拓真" },
   "extensions": {
