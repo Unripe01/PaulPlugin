@@ -3,14 +3,14 @@
   "name": "paul-kun",
   "version": "0.2.2",
   "description": "Find a timely Japanese stock, research it, write a readable article, and save it as a note draft in the browser.",
-  "author": { "name": "竹村拓真" },
+  "author": { "name": "Unripe01" },
   "extensions": {
     "com.openai": {
       "interface": {
         "displayName": "ポールくんプラグイン",
         "shortDescription": "日本株を調べ、noteに下書きする",
         "longDescription": "話題の日本株を1銘柄選び、確認できた事実から一般向けの記事を書き、ブラウザでnoteに下書き保存します。明示的な依頼がある場合だけ公開します。",
-        "developerName": "竹村拓真",
+        "developerName": "Unripe01",
         "category": "Productivity",
         "capabilities": ["Interactive", "Write"],
         "defaultPrompt": ["今日noteに書けそうな日本株を探して、記事にしてnoteに下書きして"]
